@@ -47,11 +47,21 @@ for name in stock_names:
     response = requests.get(url)
     json = response.json()
 
+    api_token = os.getenv('HUGGING_FACE_API')
+    headers = {"Authorization": f"Bearer {api_token}"}
+
+    sentiment_response = requests.post(
+    "https://api-inference.huggingface.co/models/ProsusAI/finbert",
+    headers=headers,
+    json={"inputs": json['articles'][0].get('content')}
+    )
+
     info = {
         'Company Name': name,
         'Article Title': json['articles'][0].get('title'),
         'Date Published': json['articles'][0].get('publishedAt'),
-        'Article URL': json['articles'][0].get('url')
+        'Article URL': json['articles'][0].get('url'),
+        'Sentiment': sentiment_response.json()[0][0]['label']
     }
 
     stock_news.append(info)
@@ -59,7 +69,6 @@ for name in stock_names:
 
 ## TODO:
 ## Find way to format the stock_news into a cleaner visual
-## Sentiment on the following news potentially giving a recommendation?
 
 print(stock_news)
 
