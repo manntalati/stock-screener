@@ -1,5 +1,9 @@
 import requests
 import yfinance as yf
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 stock_symbols = [
     'AAPL',
@@ -30,7 +34,7 @@ for symbol in stock_symbols:
         print('No Display Name')
 
 stock_news = []
-
+news_api_key = os.getenv('NEWS_API_KEY')
 for name in stock_names:
     url = ('https://newsapi.org/v2/everything?'
         f'q={name}&'
@@ -38,7 +42,7 @@ for name in stock_names:
         'to=2025-05-16&'
         'sortBy=publishedAt&'
         'pageSize=2&'
-        'apiKey=8fa34040487c4c3295fc3303588a42c8')
+        f'apiKey={news_api_key}')
 
     response = requests.get(url)
     json = response.json()
