@@ -34,7 +34,7 @@ for symbol in stock_symbols:
         print('No Display Name')
 
 stock_news = []
-news_api_key = os.getenv('NEWS_API_KEY')
+news_api = os.getenv('NEWS_API')
 for name in stock_names:
     url = ('https://newsapi.org/v2/everything?'
         f'q={name}&'
@@ -42,12 +42,12 @@ for name in stock_names:
         'to=2025-05-16&'
         'sortBy=publishedAt&'
         'pageSize=2&'
-        f'apiKey={news_api_key}')
+        f'apiKey={news_api}')
 
     response = requests.get(url)
     json = response.json()
 
-    api_token = os.getenv('HUGGING_FACE_API')
+    api_token = os.getenv('API_TOKEN')
     headers = {"Authorization": f"Bearer {api_token}"}
 
     sentiment_response = requests.post(
