@@ -2,6 +2,8 @@ import requests
 import yfinance as yf
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 load_dotenv()
 
@@ -47,6 +49,8 @@ for name in stock_names:
     response = requests.get(url)
     json = response.json()
 
+    print(json)
+
     api_token = os.getenv('API_TOKEN')
     headers = {"Authorization": f"Bearer {api_token}"}
 
@@ -56,20 +60,21 @@ for name in stock_names:
     json={"inputs": json['articles'][0].get('content')}
     )
 
+    date = json['articles'][0].get('publishedAt')
+
     info = {
         'Company Name': name,
         'Article Title': json['articles'][0].get('title'),
-        'Date Published': json['articles'][0].get('publishedAt'),
+        'Date Published': datetime.isoformat(date.replace("Z", "+00:00")).astimezone(ZoneInfo("America/Chicago")),
         'Article URL': json['articles'][0].get('url'),
-        'Sentiment': sentiment_response.json()[0][0]['label']
+        'Sentiment': sentiment_response.json()[0][0]['label'],
+        'Sentiment Score': sentiment_response.json()[0][0]['score'],
     }
 
     stock_news.append(info)
 
 
-## TODO:
-## Find way to format the stock_news into a cleaner visual
+## TOD0:
+# Fix error with json response
 
 print(stock_news)
-
-#print(response.json())
