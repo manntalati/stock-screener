@@ -13,7 +13,7 @@ export default function TabTwoScreen() {
   const news = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://ipaddress/analyze');
+      const res = await fetch('http://ip/analyze');
       const data = await res.json();
       setResult(data);
     } catch (err) {
