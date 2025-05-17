@@ -21,7 +21,10 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
       <Collapsible title="News on Current Stocks">
         <ThemedText>
-            <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>
+            <ThemedText>
+              Gain access to the lastest news articles on the current invested stocks. 
+              There will be provided information regarding the sentiment, new news, and information on the company.
+            </ThemedText>
         </ThemedText>    
       </Collapsible>
       </ThemedView>

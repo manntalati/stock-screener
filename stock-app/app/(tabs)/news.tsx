@@ -1,5 +1,4 @@
 import { StyleSheet, Button, Text, View, ActivityIndicator, FlatList } from 'react-native';
-import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -13,7 +12,7 @@ export default function TabTwoScreen() {
   const news = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://ip/analyze');
+      const res = await fetch('http://192.168.86.43:8081/analyze');
       const data = await res.json();
       setResult(data);
     } catch (err) {

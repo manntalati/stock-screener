@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
-
+import { Ionicons } from '@expo/vector-icons';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
@@ -34,10 +34,24 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="news"
         options={{
           title: 'News',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="newspaper.fill" color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="newspaper-sharp" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="portfolio"
+        options={{
+          title: 'Portfolio',
+          tabBarIcon: ({ color }) => <Ionicons name="list" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="recommendations"
+        options={{
+          title: 'Recommendations',
+          tabBarIcon: ({ color }) => <Ionicons name="star" size={28} color={color} />,
         }}
       />
     </Tabs>
