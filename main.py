@@ -37,9 +37,10 @@ for symbol in stock_symbols:
 
 stock_news = []
 news_api = os.getenv('NEWS_API')
-for name in stock_names:
+for i in range(len(stock_names)):
+#for name in stock_names:
     url = ('https://newsapi.org/v2/everything?'
-        f'q={name}&'
+        f'q={stock_names[i]}&'
         'from=2025-05-12&'
         'to=2025-05-16&'
         'sortBy=publishedAt&'
@@ -63,9 +64,10 @@ for name in stock_names:
     date = json['articles'][0].get('publishedAt')
 
     info = {
-        'Company Name': name,
+        'Stock Symbol': stock_symbols[i],
+        'Company Name': stock_names[i],
         'Article Title': json['articles'][0].get('title'),
-        'Date Published': datetime.isoformat(date.replace("Z", "+00:00")).astimezone(ZoneInfo("America/Chicago")),
+        'Date Published': datetime.fromisoformat(date.replace("Z", "+00:00")).astimezone(ZoneInfo("America/Chicago")),
         'Article URL': json['articles'][0].get('url'),
         'Sentiment': sentiment_response.json()[0][0]['label'],
         'Sentiment Score': sentiment_response.json()[0][0]['score'],

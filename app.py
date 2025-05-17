@@ -4,14 +4,13 @@ import requests
 import yfinance as yf
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 CORS(app)
-@app.route('/analyze', methods=['GET'])
-def analyze():
-    load_dotenv()
 
-    stock_symbols = [
+stock_symbols = [
         'AAPL',
         'AMD',
         'ARM',
@@ -26,6 +25,10 @@ def analyze():
         'VRT'
     ]
 
+load_dotenv()
+
+@app.route('/analyze', methods=['GET'])
+def analyze():
     stock_names = []
 
     for symbol in stock_symbols:
@@ -41,9 +44,9 @@ def analyze():
 
     stock_news = []
     news_api = os.getenv('NEWS_API')
-    for name in stock_names:
+    for i in range(len(stock_names)):
         url = ('https://newsapi.org/v2/everything?'
-            f'q={name}&'
+            f'q={stock_names[i]}&'
             'from=2025-05-12&'
             'to=2025-05-16&'
             'sortBy=publishedAt&'
@@ -62,18 +65,26 @@ def analyze():
         json={"inputs": json['articles'][0].get('content')}
         )
 
+        date = json['articles'][0].get('publishedAt')
+
         info = {
-            'Company Name': name,
+            'Stock Symbol': stock_symbols[i],
+            'Company Name': stock_names[i],
             'Article Title': json['articles'][0].get('title'),
-            'Date Published': json['articles'][0].get('publishedAt'),
+            'Date Published': datetime.fromisoformat(date.replace("Z", "+00:00")).astimezone(ZoneInfo("America/Chicago")),
             'Article URL': json['articles'][0].get('url'),
-            'Sentiment': sentiment_response.json()[0][0]['label']
+            'Sentiment': sentiment_response.json()[0][0]['label'].capitalize(),
+            'Sentiment Score': sentiment_response.json()[0][0]['score']
         }
 
         stock_news.append(info)
 
     return jsonify(stock_news)
 
+@app.route('/symbols', methods=['GET'])
+def get_symbols():
+
+    return jsonify(stock_symbols)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8081, debug=True)
