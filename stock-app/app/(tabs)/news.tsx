@@ -1,4 +1,4 @@
-import { StyleSheet, Button, Linking, View, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Button, Linking, View, FlatList, Dimensions } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -8,6 +8,8 @@ import React, { useState } from 'react';
 export default function TabTwoScreen() {
   const [result, setResult] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const { width, height } = Dimensions.get('window');
 
   const news = async () => {
     setLoading(true);
@@ -29,7 +31,7 @@ export default function TabTwoScreen() {
         <ThemedText type="title">News On Current Stocks</ThemedText>
       </ThemedView>
 
-      <ThemedView style={{ marginTop: 10, marginLeft: 10, marginRight: 1070 }}>
+      <ThemedView style={styles.view1}>
       <Button
         title={loading ? 'Fetching...' : 'Fetch Current News'}
         onPress={news}
@@ -41,13 +43,16 @@ export default function TabTwoScreen() {
         data={result}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <ThemedView style={[styles.result, {backgroundColor: item.Sentiment === 'Positive' ? '#d4f8e8' : item.Sentiment === 'Negative' ? '#fde2e2' : '#f0f0f0'}]}>
-            <ThemedText style={styles.flatlist}>{item['Company Name']} ({item['Stock Symbol']})</ThemedText>
+          <ThemedView style={[styles.result, 
+          {backgroundColor: item.Sentiment === 'Positive' ? '#d4f8e8' : item.Sentiment === 'Negative' ? '#fde2e2' : '#f0f0f0'},
+          {width: width * 0.9, height: height * 0.2}
+          ]}>
+            <ThemedText style={styles.flatlistTop}>{item['Company Name']} ({item['Stock Symbol']})</ThemedText>
             <ThemedText style={styles.flatlist}>Article Title: {item['Article Title']}</ThemedText>
             <ThemedText style={styles.flatlist}>Date Published: {item['Date Published']}</ThemedText>
             <ThemedText style={[styles.flatlist, styles.link]} onPress={() => Linking.openURL(item['Article URL'])}>{item['Article URL']} </ThemedText>
             <ThemedText style={styles.flatlist}>Sentiment: {item.Sentiment}</ThemedText>
-            <ThemedText style={styles.flatlist}>Sentiment Score: {Math.round(item['Sentiment Score']*100)/100}</ThemedText>
+            <ThemedText style={styles.flatListBottom}>Sentiment Score: {Math.round(item['Sentiment Score']*100)/100}</ThemedText>
           </ThemedView>
         )}
       />
@@ -56,9 +61,28 @@ export default function TabTwoScreen() {
 }
 
 const styles = StyleSheet.create({
-  flatlist: {
+  flatlistTop: {
     color: 'black',
     fontSize: 20,
+    marginBottom: 4,
+    marginLeft: 5,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+  flatListBottom: {
+    marginLeft: 5,
+    fontSize: 16,
+    color: 'black',
+  },
+  view1: {
+    marginTop: 10, 
+    marginLeft: 10, 
+    marginRight: 1070,
+  },
+  flatlist: {
+    color: 'black',
+    fontSize: 16,
+    marginLeft: 5,
   },
   link: {
     color: 'black',
@@ -70,6 +94,7 @@ const styles = StyleSheet.create({
   },
   result: {
     marginTop: 20,
+    borderRadius: 10,
   },
   error: {
     color: 'red',
@@ -84,7 +109,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
-    marginTop: 20,
     flexDirection: 'row',
     gap: 8,
   },

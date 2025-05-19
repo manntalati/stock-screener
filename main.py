@@ -50,8 +50,6 @@ for i in range(len(stock_names)):
     response = requests.get(url)
     json = response.json()
 
-    print(json)
-
     api_token = os.getenv('API_TOKEN')
     headers = {"Authorization": f"Bearer {api_token}"}
 
@@ -76,7 +74,14 @@ for i in range(len(stock_names)):
     stock_news.append(info)
 
 
-## TOD0:
-# Fix error with json response
+for sym in stock_symbols:
+    tickerInfo = yf.Ticker(sym).info
+    try:
+        price = tickerInfo['currentPrice']
+        percent_change = tickerInfo['regularMarketChangePercent']
+        print(f"Symbol: {sym}, Price: {price}, Percent Change: {percent_change}")
+    except KeyError:
+        print(f"Data not available for {sym}")
+    
 
-print(stock_news)
+#print(stock_news)

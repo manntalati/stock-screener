@@ -83,8 +83,26 @@ def analyze():
 
 @app.route('/symbols', methods=['GET'])
 def get_symbols():
+    information = []
 
-    return jsonify(stock_symbols)
+    for sym in stock_symbols:
+        tickerInfo = yf.Ticker(sym).info
+        try:
+            price = tickerInfo['currentPrice']
+            percent_change = tickerInfo['regularMarketChangePercent']
+            information.append({
+                'symbol': sym,
+                'price': price,
+                'percent_change': percent_change
+            })
+        except KeyError:
+            information.append({
+                'symbol': sym,
+                'price': 'Price Error',
+                'percent_change': 'Percent Change Error'
+            })
+
+    return jsonify(information)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8081, debug=True)
