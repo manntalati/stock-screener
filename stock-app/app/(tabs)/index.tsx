@@ -16,9 +16,10 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
       <Collapsible title="News on Current Stocks">
         <ThemedText>
-            <ThemedText>
-              Gain access to the lastest news articles on the current invested stocks. 
-              There will be provided information regarding the sentiment, new news, and information on the company.
+            <ThemedText style={styles.text}>
+              Gain access to the lastest news articles on your current invested stocks. 
+              There will be provided information regarding the sentiment, news, and information on the company.
+              With updated information, you can make better decisions on your investments.
             </ThemedText>
         </ThemedText>    
       </Collapsible>
@@ -26,14 +27,22 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <Collapsible title="Stock Portfolio">
         <ThemedText>
-            <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>
+            <ThemedText style={styles.text}>
+              View your current stock portfolio and the performance of each stock. 
+              The portfolio will be updated with the latest information on the stocks you are currently invested in when refreshed.
+              With this information, you can make better decisions on your investments.
+            </ThemedText>
         </ThemedText>    
         </Collapsible>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <Collapsible title="New Stock Recommendations">
         <ThemedText>
-            <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>
+            <ThemedText style={styles.text}>
+              Get new stock recommendations based on the financial fundamentals. 
+              The recommendations will be updated with the latest information on new stocks to invest in when refreshed. 
+              With this information, you can make better decisions on your investments.
+            </ThemedText>
         </ThemedText>    
         </Collapsible>
       </ThemedView>
@@ -42,6 +51,9 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    marginLeft: 12,
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',

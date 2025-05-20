@@ -2,7 +2,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { StyleSheet, Button, View, FlatList, Text, Dimensions } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function PortfolioScreen() {
     const [result, setResult] = useState<any[]>([]);
@@ -27,7 +27,7 @@ export default function PortfolioScreen() {
             headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
             headerImage={<View style={{ height: 0 }} />}>
         <ThemedView>
-        <ThemedText style={styles.title} type="title">Current Portfolio</ThemedText>
+            <ThemedText style={styles.title} type="title">Current Portfolio</ThemedText>
         <ThemedView style={styles.view1}>
         <Button
                 title={loading ? 'Refreshing...' : 'Refresh Portfolio'}
@@ -67,9 +67,9 @@ export default function PortfolioScreen() {
               <Text style={styles.body}>Price: {price}</Text>
               <Text style={styles.body}>Change: {pct}</Text>
             </View>
-          );
-        }}
-      />
+            );
+            }}
+        />
         </ThemedView>
         </ParallaxScrollView>
     );
