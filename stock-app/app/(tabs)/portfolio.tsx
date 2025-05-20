@@ -13,7 +13,7 @@ export default function PortfolioScreen() {
     const portfolio = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://192.168.86.45:8081/symbols');
+            const res = await fetch('http://[ipaddress]/symbols');
             const data = await res.json();
             setResult(data);
         } catch (err) {
