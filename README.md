@@ -1,4 +1,4 @@
-# Stock Screener
+# StockScreener
 After constantly facing the issue of having to rely on multiple apps to get my information about the stock market and the stocks that I have invested in, I figured it would be best to have one platform to view all of it at once. Below is StockScreener which gives information, specifically, current news regarding the stocks that you are invested in, your current stock portfolio, and potential recommendations. 
 
 ## Features
@@ -23,21 +23,22 @@ Interested in replicating this on your platform? Follow the steps below.
 2. Install the Following Libraries
 
    ```bash
-   requests, yfinance, python-dotenv, flask, flask-cors
+   requests, yfinance, python-dotenv, flask, flask-cors, pandas
+   brew install node
+   brew install python
    ```
 
 3. Run Flask Backend & Replace IP Address
 
    ```bash
-   flask run --host=0.0.0.0 --port=8081
+   source virtualenv/bin/activate
+   python app.py
    ```
 
 4. Run Expo Go Frontend
 
    ```bash
+   source virtualenv/bin/activate
    cd stock-app
-   ```
-
-   ```bash
    npx expo start
    ```
