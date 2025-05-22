@@ -21,13 +21,15 @@ stock_symbols = [
         'ARM',
         'AVD',
         'DELL',
-        'ELF',
         'NVDA',
         'PDSB',
         'PUBM',
         'QQQ',
         'TGT',
-        'VRT'
+        'VRT',
+        'VICI',
+        'VOO'
+        #'SP500',
     ]
 
 load_dotenv()
@@ -95,15 +97,18 @@ def get_symbols():
         try:
             price = tickerInfo['currentPrice']
             percent_change = tickerInfo['regularMarketChangePercent']
+            price_change = tickerInfo['currentPrice'] - tickerInfo['regularMarketPreviousClose']
             information.append({
                 'symbol': sym,
                 'price': price,
+                'price_change': price_change,
                 'percent_change': percent_change
             })
         except KeyError:
             information.append({
                 'symbol': sym,
                 'price': 'Price Error',
+                'price_change': 'Price Error',
                 'percent_change': 'Percent Change Error'
             })
 

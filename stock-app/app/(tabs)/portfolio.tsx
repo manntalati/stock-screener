@@ -13,7 +13,7 @@ export default function PortfolioScreen() {
     const portfolio = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://[ipaddress]/symbols');
+            const res = await fetch('http://192.168.86.45:8081/symbols');
             const data = await res.json();
             setResult(data);
         } catch (err) {
@@ -46,6 +46,9 @@ export default function PortfolioScreen() {
           const pct = typeof item.percent_change === 'number'
             ? `${(item.percent_change * 100 / 100).toFixed(2)}%`
             : item.percent_change;
+          const price_change = typeof item.price_change === 'number'
+            ? `$${(item.price_change).toFixed(2)}`
+            : item.price_change;
 
           return (
             <View
@@ -53,7 +56,7 @@ export default function PortfolioScreen() {
                 styles.card,
                 {
                   width: width * 0.17,
-                  height: height * 0.13,
+                  height: height * 0.15,
                   backgroundColor:
                     (typeof item.percent_change === 'number' && item.percent_change > 0)
                       ? '#d4f8e8'
@@ -65,6 +68,7 @@ export default function PortfolioScreen() {
             >
               <Text style={styles.symbol}>{item.symbol}</Text>
               <Text style={styles.body}>Price: {price}</Text>
+              <Text style={styles.body}>Price Change: {price_change}</Text>
               <Text style={styles.body}>Change: {pct}</Text>
             </View>
             );

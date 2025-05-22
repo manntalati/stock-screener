@@ -13,7 +13,7 @@ export default function RecommendationsScreen() {
     const recommendations = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://[ipaddress]/recommendations');
+            const res = await fetch('http://192.168.86.45:8081/recommendations');
             const data = await res.json();
             setResult(data);
         } catch (err) {
